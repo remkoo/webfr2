@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout">
+<head>
+<title>Questionnaires</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container" layout:fragment="content">
+    	<div class="row">
+    		<div class="text-right col-md-1 col-md-push-11">
+		        <a class="btn btn-primary" href="?form">
+					<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+		        </a>
+	        </div>
+        </div>
+        <div th:if="${questionnaires.isEmpty()}">
+         	<h2 style="text-align: center">No Questionnaires found</h2>
+        </div>
+        <div style="padding-top: 10px;">
+        	<table class="table table-bordered table-condensed table-hover">
+        		<tbody>
+	            <tr th:each="questionnaire : ${questionnaires}">
+	                <td colspan="1" style="vertical-align: middle;" th:text="${questionnaire.id}"/>
+	                <td colspan="3" style="vertical-align: middle;" th:text="${questionnaire.title}"/>
+	                <td colspan="10" style="vertical-align: middle;" th:text="${questionnaire.description}"/>
+					<td style="width: 10px;">
+	                    <a class="btn-link btn" th:href="@{/questionnaires}+ '/' + ${questionnaire.id}">
+	                    	<span class="glyphicon glyphicon-zoom-in"></span>
+	                    </a>
+	                </td>
+	            </tr>
+        		</tbody>
+        	</table>
+        </div>
+    </div>
+</body>
+</html>

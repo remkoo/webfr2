@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<body>
+    <div class="container-fluid">
+    	<div th:replace="header :: header">Fake header</div>
+		<div layout:fragment="content">Fake content</div>
+		<div th:replace="footer :: footer">Fake footer</div>
+    </div>
+</body>
+</html>

@@ -14,7 +14,6 @@ import org.apache.log4j.Logger;
 
 import ch.fhnw.webfr.flashcard.domain.Questionnaire;
 import ch.fhnw.webfr.flashcard.persistence.QuestionnaireRepository;
-import ch.fhnw.webfr.flashcard.util.QuestionnaireInitializer;
 
 @SuppressWarnings("serial")
 public class BasicServlet extends HttpServlet {

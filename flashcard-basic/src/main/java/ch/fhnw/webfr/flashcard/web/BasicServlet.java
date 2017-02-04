@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
+
 import ch.fhnw.webfr.flashcard.domain.Questionnaire;
 import ch.fhnw.webfr.flashcard.persistence.QuestionnaireRepository;
 import ch.fhnw.webfr.flashcard.util.QuestionnaireInitializer;
@@ -21,13 +23,16 @@ public class BasicServlet extends HttpServlet {
 	 * could be a problem. THIS VERSION IS NOT PRODUCTION READY!
 	 */
 	private QuestionnaireRepository questionnaireRepository;
+	private static Logger log = Logger.getLogger(BasicServlet.class);
 
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=utf-8");
-
+		log.debug("request for "+request.getRequestURL()+" from "+request.getRemoteAddr()+"/");
 		String[] pathElements = request.getRequestURI().split("/");
-		if (isLastPathElementQuestionnaires(pathElements)) {
+		if (isLastPathElementId(pathElements)) {
+			Long id = new Long(pathElements[pathElements.length - 1]);
+			handleQuestionnaireIdRequest(request, response, id);
+		} else if (isLastPathElementQuestionnaires(pathElements)) {
 			handleQuestionnairesRequest(request, response);
 		} else {
 			handleIndexRequest(request, response);
@@ -37,6 +42,16 @@ public class BasicServlet extends HttpServlet {
 	private boolean isLastPathElementQuestionnaires(String[] pathElements) {
 		String last = pathElements[pathElements.length - 1];
 		return last.equals("questionnaires");
+	}
+	
+	private boolean isLastPathElementId(String[] pathElements) {
+		String last = pathElements[pathElements.length - 1];
+		try {
+			new Long( last );
+			return true;
+		} catch (NumberFormatException e) {
+			return false;
+		}
 	}
 
 	private void handleQuestionnairesRequest(HttpServletRequest request, HttpServletResponse response)
@@ -59,6 +74,20 @@ public class BasicServlet extends HttpServlet {
 		writer.append("<h3>Welcome</h3>");
 		String url = request.getContextPath() + request.getServletPath();
 		writer.append("<p><a href='" + response.encodeURL(url) + "/questionnaires'>All Questionnaires</a></p>");
+		writer.append("</body></html>");
+	}
+	
+	private void handleQuestionnaireIdRequest(HttpServletRequest request, HttpServletResponse response, Long id) throws IOException {
+		PrintWriter writer = response.getWriter();
+		writer.append("<html><head><title>Example</title></head><body>");
+		writer.append("<h3>Questionnaire</h3>");
+		Questionnaire q = questionnaireRepository.findById(id);
+		if(q != null) {
+			writer.append("<strong>"+q.getTitle()+"</strong></br>");
+			writer.append("<span>"+q.getDescription()+"</span>");
+		} else {
+			writer.append("<span>no questionnaire found.</span>");
+		}
 		writer.append("</body></html>");
 	}
 

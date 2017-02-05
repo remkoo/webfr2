@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+  layout:decorator="layout">
+<head>
+<title>Questionnaire</title>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+</head>
+<body>
+     <div layout:fragment="content">
+		<form class="form-horizontal" th:action="@{/questionnaires}+'/'+${questionnaire.id}" th:object="${questionnaire}" th:method="put">
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="title">Title Update:</label>
+				<div class="col-md-8">
+					<input type="text" id="title" class="form-control" th:field="*{title}" autofocus="autofocus" />
+					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="text-danger">Incorrect title</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label" for="description">Description:</label>
+				<div class="col-md-8">
+					<input type="text" id="description" class="form-control" th:field="*{description}" />
+					<span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="text-danger">Incorrect title</span>
+				</div>
+			</div>
+			<div class="form-group">
+				<div class="col-md-2 col-md-push-8 text-right">
+					<a class="btn btn-default" th:href="@{/questionnaires}">Cancel</a> 
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+		</form>
+    </div>
+</body>
+</html>

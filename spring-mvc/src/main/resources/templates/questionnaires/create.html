@@ -16,6 +16,8 @@
 				<div class="col-md-8">
 					<input type="text" id="title" class="form-control"
 						th:field="*{title}" autofocus="autofocus" />
+					<span th:if="${#fields.hasErrors('title')}" th:errors="*{title}"
+						class="text-danger">Incorrect title</span>
 				</div>
 			</div>
 			<div class="form-group">
@@ -23,6 +25,9 @@
 				<div class="col-md-8">
 					<input type="text" id="description" class="form-control"
 						th:field="*{description}" />
+					<span th:if="${#fields.hasErrors('description')}"
+						th:errors="*{description}" class="text-danger">Incorrect
+						description</span>
 				</div>
 			</div>
 			<div class="form-group">

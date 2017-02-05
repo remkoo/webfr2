@@ -38,6 +38,6 @@ class Counter extends React.Component {
 }
 
 render(
-    <Counter message="Press these buttons to increment and to reset"/>,
+    <Counter message="Dröck die Chnöpf zom ue zelle und zruggstelle."/>,
     document.getElementById('app')
 );

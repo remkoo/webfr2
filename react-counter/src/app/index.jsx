@@ -35,6 +35,17 @@ class Counter extends React.Component {
       </div>
     )
   }
+
+  componentDidMount() {
+    console.log('componentDidMount');
+    this.timer = setInterval(this.increment, 1);
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount');
+    clearInterval(this.timer);
+  }
+  
 }
 
 render(

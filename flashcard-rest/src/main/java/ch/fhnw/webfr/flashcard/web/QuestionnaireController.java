@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ch.fhnw.webfr.flashcard.domain.Questionnaire;
 import ch.fhnw.webfr.flashcard.persistence.QuestionnaireRepository;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/questionnaires")
 public class QuestionnaireController {
@@ -29,7 +30,8 @@ public class QuestionnaireController {
 	
 	@Autowired
 	private QuestionnaireRepository questionnaireRepository;
-
+	
+	@CrossOrigin
 	@RequestMapping(method = RequestMethod.GET)
 	public ResponseEntity<List<Questionnaire>> findAll() {
 		Sort sort = new Sort(Direction.ASC, "id");
@@ -37,7 +39,7 @@ public class QuestionnaireController {
 		log.debug("Found " + questionnaires.size() + " questionnaires");
 		return new ResponseEntity<List<Questionnaire>>(questionnaires, HttpStatus.OK);
 	}
-
+	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET)
 	public ResponseEntity<Questionnaire> findById(@PathVariable String id) {
 		Questionnaire questionnaire = questionnaireRepository.findOne(id);
@@ -48,9 +50,9 @@ public class QuestionnaireController {
 		return new ResponseEntity<Questionnaire>(questionnaire, HttpStatus.OK);
 	}
 	
+	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Questionnaire> create(@Valid @RequestBody Questionnaire questionnaire, 
-			BindingResult result) {
+	public ResponseEntity<Questionnaire> create(@Valid @RequestBody Questionnaire questionnaire, BindingResult result) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<Questionnaire>(HttpStatus.BAD_REQUEST);
 		}
@@ -60,8 +62,7 @@ public class QuestionnaireController {
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Questionnaire> update(@Valid @RequestBody Questionnaire questionnaire,
-			BindingResult result, @PathVariable String id) {
+	public ResponseEntity<Questionnaire> update(@Valid @RequestBody Questionnaire questionnaire, BindingResult result, @PathVariable String id) {
 		if (result.hasErrors()) {
 			return new ResponseEntity<Questionnaire>(HttpStatus.BAD_REQUEST);
 		}
@@ -83,5 +84,5 @@ public class QuestionnaireController {
 		log.debug("Deleted questionnaire with id=" + id);
 		return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
 	}
-	
+
 }

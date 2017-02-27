@@ -1,4 +1,6 @@
 {
-"url": "http://localhost:8080/flashcard-rest/questionnaires",
-"subtitle": "using server 'flashcard-rest'"
+"url_deact": "http://localhost:8080/flashcard-rest/questionnaires",
+"subtitle_deact": "using server 'flashcard-express'",
+"subtitle": "using server 'flashcard-rest'",
+"url": "http://localhost:7000/flashcard-express/questionnaires"
 }
